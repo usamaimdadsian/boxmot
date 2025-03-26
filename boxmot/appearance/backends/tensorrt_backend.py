@@ -93,6 +93,10 @@ class TensorRTBackend(BaseModelBackend):
             batch_array.append(temp_im_batch)
         
         for temp_batch in batch_array:
+            if temp_batch.shape[0] < out_batch:
+                padd_batch = out_batch - temp_batch.shape[0]
+                temp_zeros = torch.zeros(padd_batch,*temp_batch.shape[1:], device=temp_batch.device)
+                temp_batch = torch.cat([temp_batch,temp_zeros],dim=0)
             # Adjust for dynamic shapes
             if temp_batch.shape != self.bindings["images"].shape:
                 if self.is_trt10:
@@ -119,7 +123,7 @@ class TensorRTBackend(BaseModelBackend):
             resultant_features.append(features.clone())
 
         if len(resultant_features)== 1:
-            return resultant_features[0]
+            return resultant_features[0][:im_batch.shape[0]]
         else:
             rslt_features = torch.cat(resultant_features,dim=0)
             rslt_features= rslt_features[:im_batch.shape[0]]
