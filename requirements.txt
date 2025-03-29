@@ -1,0 +1,13 @@
+scikit-learn
+loguru
+pyyaml
+pandas
+opencv-python
+gdown
+ftfy
+regex
+lap
+filterpy
+openvino-dev
+onnx
+yacs
