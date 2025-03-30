@@ -179,7 +179,7 @@ def generate_dets_embs(args: argparse.Namespace, y: Path, source: Path) -> None:
 
     reids = []
     for r in args.reid_model:
-        reid_model = ReidAutoBackend(weights=args.reid_model,
+        reid_model = ReidAutoBackend(weights=r,
                                      device=yolo.predictor.device,
                                      half=args.half).model
         reids.append(reid_model)

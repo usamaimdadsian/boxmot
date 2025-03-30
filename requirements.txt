@@ -11,3 +11,4 @@ filterpy
 openvino-dev
 onnx
 yacs
+onnxscript
