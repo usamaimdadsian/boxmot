@@ -31,6 +31,8 @@ class ReidAutoBackend():
             half (bool): Whether to use half precision for model inference.
         """
         super().__init__()
+        if "fp32" in str(weights) or "fp16" in str(weights):
+            weights = weights.with_suffix(".engine")
         w = weights[0] if isinstance(weights, list) else weights
         (
             self.pt,
